@@ -1,7 +1,14 @@
 package com.soojeongshin.imagegallery.network
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+/**
+ * This data class defines a Hit which includes all information of an image.
+ * The names of this data class are used by Moshi to match the names of values in JSON.
+ */
+@Parcelize
 data class Hit(
     @Json(name = "largeImageURL") val largeImageUrl: String,
     @Json(name = "webformatHeight") val webFormatHeight: Int,
@@ -24,4 +31,4 @@ data class Hit(
     val imageSize: Int,
     val previewWidth: Int,
     @Json(name = "userImageURL") val userImageUrl: String,
-    @Json(name = "previewURL") val previewUrl: String)
+    @Json(name = "previewURL") val previewUrl: String) : Parcelable

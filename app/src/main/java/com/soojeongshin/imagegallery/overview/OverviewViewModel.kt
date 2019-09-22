@@ -28,6 +28,13 @@ class OverviewViewModel : ViewModel() {
     val hits: LiveData<List<Hit>>
         get() = _hits
 
+    // Internally, we use a MutableLiveData to handle navigation to the selected hit
+    private val _navigateToSelectedHit = MutableLiveData<Hit>()
+
+    // The external immutable LiveData for the navigation hit
+    val navigateToSelectedHit: LiveData<Hit>
+        get() =_navigateToSelectedHit
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -65,5 +72,20 @@ class OverviewViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    /**
+     * When the hit is clicked, set the [_navigateToSelectedHit] [MutableLiveData]
+     * @param hit The [Hit] that was clicked on
+     */
+    fun displayHitDetails(hit: Hit) {
+        _navigateToSelectedHit.value = hit
+    }
+
+    /**
+     * After the navigation has taken place, make sure navigateToSelectedHit is set to null
+     */
+    fun displayHitDetailsComplete() {
+        _navigateToSelectedHit.value = null
     }
 }

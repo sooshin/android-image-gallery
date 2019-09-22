@@ -12,7 +12,8 @@ import com.soojeongshin.imagegallery.network.Hit
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class PhotoStaggeredGridAdapter : ListAdapter<Hit, PhotoStaggeredGridAdapter.HitViewHolder>(DiffCallback) {
+class PhotoStaggeredGridAdapter(private val onClickListener: OnClickListener)
+    : ListAdapter<Hit, PhotoStaggeredGridAdapter.HitViewHolder>(DiffCallback) {
 
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
@@ -26,7 +27,19 @@ class PhotoStaggeredGridAdapter : ListAdapter<Hit, PhotoStaggeredGridAdapter.Hit
      */
     override fun onBindViewHolder(holder: HitViewHolder, position: Int) {
         val hit = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(hit)
+        }
         holder.bind(hit)
+    }
+
+    /**
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Hit]
+     * associated with the current item to the [onClick] function.
+     * @param clickListener lambda that will be called with the current [Hit]
+     */
+    class OnClickListener(val clickListener: (hit:Hit) -> Unit) {
+        fun onClick(hit: Hit) = clickListener(hit)
     }
 
     /**

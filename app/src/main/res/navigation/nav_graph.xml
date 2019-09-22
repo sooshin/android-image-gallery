@@ -20,6 +20,9 @@
         android:name="com.soojeongshin.imagegallery.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="selectedHit"
+            app:argType="com.soojeongshin.imagegallery.network.Hit" />
     </fragment>
 
 </navigation>
