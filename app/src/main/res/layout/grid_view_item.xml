@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="viewModel"
-            type="com.soojeongshin.imagegallery.overview.OverviewViewModel" />
 
+        <variable
+            name="hit"
+            type="com.soojeongshin.imagegallery.network.Hit" />
     </data>
 
     <ImageView
+        android:id="@+id/hit_image"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:padding="2dp"
         android:scaleType="centerCrop"
-        app:imageUrl="@{viewModel.hit.largeImageUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        app:imageUrl="@{hit.webFormatUrl}"
+        tools:src="@tools:sample/backgrounds/scenic" />
 </layout>

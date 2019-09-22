@@ -8,6 +8,7 @@ buildscript {
     ext.version_navigation = "2.1.0"
     ext.version_retrofit = "2.6.1"
     ext.version_glide = "4.9.0"
+    ext.version_recyclerview = "1.1.0-beta04"
     repositories {
         google()
         jcenter()

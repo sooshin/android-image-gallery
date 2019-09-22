@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.soojeongshin.imagegallery.databinding.GridViewItemBinding
+import com.soojeongshin.imagegallery.databinding.FragmentOverviewBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -23,14 +23,16 @@ class OverviewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val binding = GridViewItemBinding.inflate(inflater)
+        val binding = FragmentOverviewBinding.inflate(inflater)
 
         // Allows Data Binding to observe LiveData with the lifecycle of this Fragment
         binding.setLifecycleOwner(this)
 
         // Giving the binding access to the OverviewModel
         binding.viewModel = viewModel
+
+        // Sets the adapter of the photoGrid RecyclerView
+        binding.photosStaggeredGrid.adapter = PhotoStaggeredGridAdapter()
 
         // Inflate the layout for this fragment
         return binding.root

@@ -20,10 +20,13 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    private val _hit = MutableLiveData<Hit>()
+    // Internally, we use a MutableLiveData, because we will be updating the List of Hit
+    // with new values
+    private val _hits = MutableLiveData<List<Hit>>()
 
-    val hit: LiveData<Hit>
-        get() = _hit
+    // The external LiveData interface to the property is immutable, so only this class can modify
+    val hits: LiveData<List<Hit>>
+        get() = _hits
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -47,7 +50,7 @@ class OverviewViewModel : ViewModel() {
             try {
                 val listResult = getImagesSuspended.hits
                 if (listResult!!.isNotEmpty()) {
-                    _hit.value = listResult[0]
+                    _hits.value = listResult
                 }
             } catch (e:Exception) {
                 _status.value = "Failure: ${e.message}"
