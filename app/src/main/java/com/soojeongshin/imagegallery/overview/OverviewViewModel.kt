@@ -3,11 +3,11 @@ package com.soojeongshin.imagegallery.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.soojeongshin.imagegallery.network.ImageResponse
 import com.soojeongshin.imagegallery.network.PixabayApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -19,6 +19,12 @@ class OverviewViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    // Create a Coroutine scope using a job to be able to cancel when needed
+    private var viewModelJob = Job()
+
+    // the Coroutine runs using the Main (UI) dispatcher
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
     /**
      * Call getPixabayImages() on init so we can display status immediately.
      */
@@ -27,19 +33,26 @@ class OverviewViewModel : ViewModel() {
     }
 
     private fun getPixabayImages() {
-        val imageResponseData = MutableLiveData<ImageResponse>();
-        PixabayApi.retrofitService.getImageResponse("10961674-bf47eb00b05f514cdd08f6e11", 1)
-            .enqueue(object: Callback<ImageResponse> {
-                override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
-                    _response.value = "Success: ${response.body()?.hits?.size} Images retrieved"
+        coroutineScope.launch {
+            val getImagesSuspended  =
+                PixabayApi.retrofitService.getImageResponse(
+                    "10961674-bf47eb00b05f514cdd08f6e11",
+                    1)
+            try {
+                val listResult = getImagesSuspended.hits
+                _response.value = "Success: ${listResult!!.size} Images retrieved"
+            } catch (e:Exception) {
+                _response.value = "Failure: ${e.message}"
+            }
+        }
+    }
 
-                }
-
-                override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-                    _response.value = "Failure: " + t.message
-                }
-
-            })
-
+    /**
+     * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
+     * Retrofit service to stop.
+     */
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
