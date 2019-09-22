@@ -3,6 +3,7 @@ package com.soojeongshin.imagegallery.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.soojeongshin.imagegallery.network.Hit
 import com.soojeongshin.imagegallery.network.PixabayApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,10 +15,15 @@ import kotlinx.coroutines.launch
  */
 class OverviewViewModel : ViewModel() {
 
-    private val _response = MutableLiveData<String>()
+    private val _status = MutableLiveData<String>()
 
-    val response: LiveData<String>
-        get() = _response
+    val status: LiveData<String>
+        get() = _status
+
+    private val _hit = MutableLiveData<Hit>()
+
+    val hit: LiveData<Hit>
+        get() = _hit
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -40,9 +46,11 @@ class OverviewViewModel : ViewModel() {
                     1)
             try {
                 val listResult = getImagesSuspended.hits
-                _response.value = "Success: ${listResult!!.size} Images retrieved"
+                if (listResult!!.isNotEmpty()) {
+                    _hit.value = listResult[0]
+                }
             } catch (e:Exception) {
-                _response.value = "Failure: ${e.message}"
+                _status.value = "Failure: ${e.message}"
             }
         }
     }
