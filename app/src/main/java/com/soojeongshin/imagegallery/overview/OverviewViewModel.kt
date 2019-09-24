@@ -3,12 +3,11 @@ package com.soojeongshin.imagegallery.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.soojeongshin.imagegallery.data.HitsDataSource
 import com.soojeongshin.imagegallery.network.Hit
-import com.soojeongshin.imagegallery.network.PixabayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -20,14 +19,6 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    // Internally, we use a MutableLiveData, because we will be updating the List of Hit
-    // with new values
-    private val _hits = MutableLiveData<List<Hit>>()
-
-    // The external LiveData interface to the property is immutable, so only this class can modify
-    val hits: LiveData<List<Hit>>
-        get() = _hits
-
     // Internally, we use a MutableLiveData to handle navigation to the selected hit
     private val _navigateToSelectedHit = MutableLiveData<Hit>()
 
@@ -35,43 +26,32 @@ class OverviewViewModel : ViewModel() {
     val navigateToSelectedHit: LiveData<Hit>
         get() =_navigateToSelectedHit
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
-    private var viewModelJob = Job()
-
-    // the Coroutine runs using the Main (UI) dispatcher
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    //  The PagedList of Hit which loads images in chunks from a DataSource
+    var pagedHits : LiveData<PagedList<Hit>>
 
     /**
-     * Call getPixabayImages() on init so we can display status immediately.
+     * Initializes the pagedList of Hit on init.
      */
     init {
-        getPixabayImages()
+        // Configure how a PagedList loads contents from the DataSource
+        val config = PagedList.Config.Builder()
+            .setInitialLoadSizeHint(20)
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .build()
+        pagedHits= initializedPagedListBuilder(config).build()
     }
 
-    private fun getPixabayImages() {
-        coroutineScope.launch {
-            val getImagesSuspended  =
-                PixabayApi.retrofitService.getImageResponse(
-                    "10961674-bf47eb00b05f514cdd08f6e11",
-                    1)
-            try {
-                val listResult = getImagesSuspended.hits
-                if (listResult!!.isNotEmpty()) {
-                    _hits.value = listResult
-                }
-            } catch (e:Exception) {
-                _status.value = "Failure: ${e.message}"
+    fun getHits(): LiveData<PagedList<Hit>> = pagedHits
+
+    private fun initializedPagedListBuilder(config: PagedList.Config):
+            LivePagedListBuilder<Int, Hit> {
+        val dataSourceFactory = object: DataSource.Factory<Int, Hit>() {
+            override fun create(): DataSource<Int, Hit> {
+                return HitsDataSource()
             }
         }
-    }
-
-    /**
-     * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
-     * Retrofit service to stop.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
+        return LivePagedListBuilder<Int, Hit>(dataSourceFactory, config)
     }
 
     /**

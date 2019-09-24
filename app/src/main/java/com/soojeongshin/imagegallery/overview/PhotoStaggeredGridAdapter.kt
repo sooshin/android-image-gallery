@@ -2,6 +2,7 @@ package com.soojeongshin.imagegallery.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,7 @@ import com.soojeongshin.imagegallery.network.Hit
  * data, including computing diffs between lists.
  */
 class PhotoStaggeredGridAdapter(private val onClickListener: OnClickListener)
-    : ListAdapter<Hit, PhotoStaggeredGridAdapter.HitViewHolder>(DiffCallback) {
+    : PagedListAdapter<Hit, PhotoStaggeredGridAdapter.HitViewHolder>(DiffCallback) {
 
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
@@ -28,9 +29,9 @@ class PhotoStaggeredGridAdapter(private val onClickListener: OnClickListener)
     override fun onBindViewHolder(holder: HitViewHolder, position: Int) {
         val hit = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(hit)
+            onClickListener.onClick(hit!!)
         }
-        holder.bind(hit)
+        holder.bind(hit!!)
     }
 
     /**

@@ -3,6 +3,7 @@ package com.soojeongshin.imagegallery
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -24,7 +25,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Hit>?) {
+fun bindRecyclerView(recyclerView: RecyclerView, data: PagedList<Hit>?) {
     val adapter = recyclerView.adapter as PhotoStaggeredGridAdapter
     adapter.submitList(data)
 }
