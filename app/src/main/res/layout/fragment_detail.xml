@@ -64,6 +64,15 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_comments"
                 app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
                 tools:text="25" />
+
+            <Button
+                android:id="@+id/download_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/download"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_comments"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

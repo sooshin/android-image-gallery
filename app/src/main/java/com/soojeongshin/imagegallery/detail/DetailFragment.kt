@@ -29,6 +29,9 @@ class DetailFragment : Fragment() {
         binding.viewModel = ViewModelProviders.of(
             this, viewModelFactory).get(DetailViewModel::class.java)
 
+        binding.downloadButton.setOnClickListener {
+            DownloadImageTask(requireContext()).execute(hit.webFormatUrl)
+        }
         return binding.root
     }
 }
