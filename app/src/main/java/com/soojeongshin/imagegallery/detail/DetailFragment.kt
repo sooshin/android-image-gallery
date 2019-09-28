@@ -2,9 +2,13 @@ package com.soojeongshin.imagegallery.detail
 
 
 import android.Manifest
+import android.app.DownloadManager
+import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.soojeongshin.imagegallery.R
 import com.soojeongshin.imagegallery.databinding.FragmentDetailBinding
 
 /**
@@ -45,11 +50,11 @@ class DetailFragment : Fragment() {
                     requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
                 } else {
                     // Permission already granted, download images
-                    DownloadImageTask(requireContext()).execute(hit.webFormatUrl)
+                    startDownloading(context!!)
                 }
             } else {
                 // System OS is less than marshmallow, runtime permission is not required, perform download
-                DownloadImageTask(requireContext()).execute(hit.webFormatUrl)
+                startDownloading(context!!)
             }
         }
         return binding.root
@@ -64,8 +69,7 @@ class DetailFragment : Fragment() {
             STORAGE_PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted, download images
-                    val hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
-                    DownloadImageTask(requireContext()).execute(hit.webFormatUrl)
+                    startDownloading(context!!)
                 } else {
                     // Permission denied, show error message
                     Toast.makeText(context, "Permission denied!", Toast.LENGTH_LONG).show()
@@ -73,5 +77,29 @@ class DetailFragment : Fragment() {
              }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun startDownloading(context: Context) {
+        val hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
+        // Get an image url
+        val webFormatUrl = hit.webFormatUrl
+
+        // Create a DownloadManager.Request with all the details of the download and conditions
+        // to start with
+        val request = DownloadManager.Request(Uri.parse(webFormatUrl))
+        // Allow type of networks to download files by default both are allowed
+        request.setAllowedNetworkTypes(
+            DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+        request.setTitle(context.getString(R.string.download))
+        request.setDescription("Download in progress...")
+
+        request.setNotificationVisibility(
+            DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setDestinationInExternalPublicDir(
+            Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}")
+
+        // Get download service, and enqueue file
+        val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        manager.enqueue(request)
     }
 }
