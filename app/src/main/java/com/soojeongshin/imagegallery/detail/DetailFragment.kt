@@ -96,7 +96,7 @@ class DetailFragment : Fragment() {
         request.setNotificationVisibility(
             DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(
-            Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}")
+            Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}.jpg")
 
         // Get download service, and enqueue file
         val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
