@@ -2,6 +2,10 @@ package com.soojeongshin.imagegallery.data
 
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
+import com.soojeongshin.imagegallery.API_KEY
+import com.soojeongshin.imagegallery.NEXT_PAGE_KEY
+import com.soojeongshin.imagegallery.PAGE
+import com.soojeongshin.imagegallery.PREVIOUS_PAGE_KEY
 import com.soojeongshin.imagegallery.network.Hit
 import com.soojeongshin.imagegallery.network.PixabayApi
 import kotlinx.coroutines.CoroutineScope
@@ -17,11 +21,11 @@ class HitsDataSource : PageKeyedDataSource<Int, Hit>() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiService.getImageResponse(
-                    "10961674-bf47eb00b05f514cdd08f6e11", 1)
+                    API_KEY, PAGE)
                 when {
                     isActive -> {
                         val listResult = response.hits
-                        callback.onResult(listResult?: listOf(), 1,2)
+                        callback.onResult(listResult?: listOf(), PREVIOUS_PAGE_KEY, NEXT_PAGE_KEY)
                     }
                 }
             } catch (e: Exception) {
@@ -35,7 +39,7 @@ class HitsDataSource : PageKeyedDataSource<Int, Hit>() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val response = apiService.getImageResponse(
-                    "10961674-bf47eb00b05f514cdd08f6e11", currentPage)
+                    API_KEY, currentPage)
                 when {
                     isActive -> {
                         val nextPage = currentPage + 1

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.soojeongshin.imagegallery.INITIAL_LOAD_SIZE_HINT
+import com.soojeongshin.imagegallery.PAGE_SIZE
 import com.soojeongshin.imagegallery.data.HitsDataSource
 import com.soojeongshin.imagegallery.network.Hit
 
@@ -35,8 +37,8 @@ class OverviewViewModel : ViewModel() {
     init {
         // Configure how a PagedList loads contents from the DataSource
         val config = PagedList.Config.Builder()
-            .setInitialLoadSizeHint(20)
-            .setPageSize(20)
+            .setInitialLoadSizeHint(INITIAL_LOAD_SIZE_HINT)
+            .setPageSize(PAGE_SIZE)
             .setEnablePlaceholders(false)
             .build()
         pagedHits= initializedPagedListBuilder(config).build()

@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.soojeongshin.imagegallery.R
+import com.soojeongshin.imagegallery.STORAGE_PERMISSION_CODE
 import com.soojeongshin.imagegallery.databinding.FragmentDetailBinding
 
 /**
@@ -25,8 +26,6 @@ import com.soojeongshin.imagegallery.databinding.FragmentDetailBinding
  * through Jetpack Navigation's SafeArgs.
  */
 class DetailFragment : Fragment() {
-
-    val STORAGE_PERMISSION_CODE: Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
