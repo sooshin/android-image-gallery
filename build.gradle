@@ -7,7 +7,7 @@ buildscript {
     ext.version_moshi = "1.8.0"
     ext.version_navigation = "2.1.0"
     ext.version_retrofit = "2.6.1"
-    ext.version_glide = "4.9.0"
+    ext.version_glide = "4.10.0"
     ext.version_recyclerview = "1.1.0-beta04"
     ext.version_paging = "2.1.0"
     repositories {
