@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Image Gallery</string>
     <string name="download">Download</string>
+    <string name="likes">Likes</string>
+    <string name="comments">Comments</string>
+    <string name="views">Views</string>
+    <string name="downloads">Downloads</string>
+    <string name="tags"># Tags</string>
+    <string name="by">by</string>
 </resources>

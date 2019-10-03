@@ -22,57 +22,144 @@
             <ImageView
                 android:id="@+id/iv_main_photo"
                 android:layout_width="0dp"
-                android:layout_height="266dp"
+                android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.selectedHit.largeImageUrl}"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/margin_activity" />
+
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.selectedHit.user}"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
+                tools:text="Soo" />
+
+            <TextView
+                android:id="@+id/tv_likes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
+                android:drawableStart="@drawable/ic_likes"
+                android:drawablePadding="8dp"
+                android:text="@string/likes"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/tv_user"
+                tools:text="Likes" />
 
             <TextView
                 android:id="@+id/tv_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_likes"
-                android:drawablePadding="@dimen/margin_activity"
                 android:text="@{String.valueOf(viewModel.selectedHit.likes)}"
-                app:layout_constraintEnd_toStartOf="@+id/tv_comments"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
-                tools:text="16" />
+                app:layout_constraintStart_toStartOf="@+id/tv_likes_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_likes_label"
+                tools:text="344" />
+
+            <TextView
+                android:id="@+id/tv_comments_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_comments"
+                android:drawablePadding="8dp"
+                android:text="@string/comments"
+                app:layout_constraintStart_toStartOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/tv_likes_label"
+                tools:text="Comments" />
 
             <TextView
                 android:id="@+id/tv_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_comments"
-                android:drawablePadding="@dimen/margin_activity"
                 android:text="@{String.valueOf(viewModel.selectedHit.comments)}"
-                app:layout_constraintEnd_toStartOf="@+id/tv_views"
-                app:layout_constraintStart_toEndOf="@+id/tv_likes"
-                app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
-                tools:text="26" />
+                app:layout_constraintStart_toStartOf="@+id/guideline_center"
+                app:layout_constraintTop_toBottomOf="@+id/tv_comments_label"
+                tools:text="345" />
+
+            <TextView
+                android:id="@+id/tv_views_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
+                android:drawableStart="@drawable/ic_views"
+                android:drawablePadding="8dp"
+                android:text="@string/views"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/tv_likes"
+                tools:text="Views" />
 
             <TextView
                 android:id="@+id/tv_views"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_views"
-                android:drawablePadding="@dimen/margin_activity"
                 android:text="@{String.valueOf(viewModel.selectedHit.views)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_comments"
-                app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
-                tools:text="25" />
+                app:layout_constraintStart_toStartOf="@+id/tv_views_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_views_label"
+                tools:text="346" />
+
+            <TextView
+                android:id="@+id/tv_downloads_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
+                android:drawableStart="@drawable/ic_downloads"
+                android:drawablePadding="8dp"
+                android:text="@string/downloads"
+                app:layout_constraintStart_toStartOf="@+id/guideline_center"
+                app:layout_constraintTop_toBottomOf="@+id/tv_comments"
+                tools:text="Downloads" />
+
+            <TextView
+                android:id="@+id/tv_downloads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(viewModel.selectedHit.views)}"
+                app:layout_constraintStart_toStartOf="@+id/tv_downloads_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_downloads_label"
+                tools:text="346" />
+
+            <TextView
+                android:id="@+id/tv_tags_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
+                android:text="@string/tags"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/tv_views"
+                tools:text="# Tags" />
 
             <Button
                 android:id="@+id/download_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
                 android:text="@string/download"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_comments"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_tags_label" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
