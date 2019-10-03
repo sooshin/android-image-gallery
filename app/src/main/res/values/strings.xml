@@ -7,4 +7,6 @@
     <string name="downloads">Downloads</string>
     <string name="tags"># Tags</string>
     <string name="by">by</string>
+<!-- Content Description -->
+    <string name="main_photo_description">Main photo</string>
 </resources>

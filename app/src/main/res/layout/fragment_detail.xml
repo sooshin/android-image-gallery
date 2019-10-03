@@ -23,6 +23,7 @@
                 android:id="@+id/iv_main_photo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:contentDescription="@string/main_photo_description"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.selectedHit.largeImageUrl}"
                 app:layout_constraintDimensionRatio="1:1"
