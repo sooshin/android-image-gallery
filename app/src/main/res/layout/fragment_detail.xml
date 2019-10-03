@@ -49,7 +49,7 @@
                 android:id="@+id/tv_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.selectedHit.user}"
+                android:text="@{@string/by_format(viewModel.selectedHit.user)}"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
                 tools:text="Soo" />
