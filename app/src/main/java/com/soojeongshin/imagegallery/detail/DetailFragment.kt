@@ -16,9 +16,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.chip.Chip
 import com.soojeongshin.imagegallery.R
 import com.soojeongshin.imagegallery.STORAGE_PERMISSION_CODE
 import com.soojeongshin.imagegallery.databinding.FragmentDetailBinding
+import com.soojeongshin.imagegallery.network.Hit
 
 /**
  * This [Fragment] shows detailed information about a selected hit of Pixabay images.
@@ -27,13 +29,16 @@ import com.soojeongshin.imagegallery.databinding.FragmentDetailBinding
  */
 class DetailFragment : Fragment() {
 
+    private lateinit var binding: FragmentDetailBinding
+    private lateinit var hit: Hit
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val application = requireNotNull(activity).application
-        val binding = FragmentDetailBinding.inflate(inflater)
+        binding = FragmentDetailBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-        val hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
+        hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
 
         val viewModelFactory = DetailViewModelFactory(hit, application)
 
@@ -56,6 +61,9 @@ class DetailFragment : Fragment() {
                 startDownloading(context!!)
             }
         }
+
+        addChipGroup()
+
         return binding.root
     }
 
@@ -78,8 +86,17 @@ class DetailFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    private fun addChipGroup() {
+        val chipGroup = binding.tagsList
+        val tagsList = hit.tags.split(getString(R.string.split_delimiter))
+        for (tag in tagsList) {
+            val chip = Chip(context)
+            chip.text = tag
+            chipGroup.addView(chip)
+        }
+    }
+
     private fun startDownloading(context: Context) {
-        val hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
         // Get an image url
         val webFormatUrl = hit.webFormatUrl
 
