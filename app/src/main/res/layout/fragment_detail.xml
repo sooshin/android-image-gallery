@@ -49,7 +49,10 @@
                 android:id="@+id/tv_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_activity"
                 android:text="@{@string/by_format(viewModel.selectedHit.user)}"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/iv_main_photo"
                 tools:text="Soo" />
@@ -62,6 +65,7 @@
                 android:drawableStart="@drawable/ic_likes"
                 android:drawablePadding="8dp"
                 android:text="@string/likes"
+                android:textColor="@color/color_label"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_center"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -73,6 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(viewModel.selectedHit.likes)}"
+                android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tv_likes_label"
                 app:layout_constraintTop_toBottomOf="@+id/tv_likes_label"
                 tools:text="344" />
@@ -84,6 +89,7 @@
                 android:drawableStart="@drawable/ic_comments"
                 android:drawablePadding="8dp"
                 android:text="@string/comments"
+                android:textColor="@color/color_label"
                 app:layout_constraintStart_toStartOf="@+id/guideline_center"
                 app:layout_constraintTop_toTopOf="@+id/tv_likes_label"
                 tools:text="Comments" />
@@ -93,6 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(viewModel.selectedHit.comments)}"
+                android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/guideline_center"
                 app:layout_constraintTop_toBottomOf="@+id/tv_comments_label"
                 tools:text="345" />
@@ -105,6 +112,7 @@
                 android:drawableStart="@drawable/ic_views"
                 android:drawablePadding="8dp"
                 android:text="@string/views"
+                android:textColor="@color/color_label"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_center"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -116,6 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(viewModel.selectedHit.views)}"
+                android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tv_views_label"
                 app:layout_constraintTop_toBottomOf="@+id/tv_views_label"
                 tools:text="346" />
@@ -128,6 +137,7 @@
                 android:drawableStart="@drawable/ic_downloads"
                 android:drawablePadding="8dp"
                 android:text="@string/downloads"
+                android:textColor="@color/color_label"
                 app:layout_constraintStart_toStartOf="@+id/guideline_center"
                 app:layout_constraintTop_toBottomOf="@+id/tv_comments"
                 tools:text="Downloads" />
@@ -137,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(viewModel.selectedHit.downloads)}"
+                android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tv_downloads_label"
                 app:layout_constraintTop_toBottomOf="@+id/tv_downloads_label"
                 tools:text="346" />
@@ -147,27 +158,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_activity"
                 android:text="@string/tags"
+                android:textColor="@color/color_label"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/tv_views"
                 tools:text="# Tags" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/tags_list"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scrollview"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/tv_tags_label"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tags_label"
-                android:padding="@dimen/margin_activity"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tags_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_activity"
+                    app:layout_constraintStart_toStartOf="@+id/tv_tags_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tags_label" />
+
+            </HorizontalScrollView>
 
             <Button
                 android:id="@+id/download_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_activity"
+                android:layout_marginBottom="@dimen/margin_activity"
                 android:text="@string/download"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tags_list" />
+                app:layout_constraintTop_toBottomOf="@+id/horizontal_scrollview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
