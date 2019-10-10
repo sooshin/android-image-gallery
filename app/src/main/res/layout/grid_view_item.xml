@@ -10,13 +10,21 @@
             type="com.soojeongshin.imagegallery.network.Hit" />
     </data>
 
-    <ImageView
-        android:id="@+id/hit_image"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:padding="2dp"
-        android:scaleType="centerCrop"
-        app:imageUrl="@{hit.webFormatUrl}"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/hit_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{hit.webFormatUrl}"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+    </FrameLayout>
+
 </layout>
