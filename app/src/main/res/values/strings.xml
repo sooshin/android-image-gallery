@@ -10,4 +10,5 @@
     <string name="split_delimiter">,</string>
 <!-- Content Description -->
     <string name="main_photo_description">Main photo</string>
+    <string name="photo_description">Photo</string>
 </resources>

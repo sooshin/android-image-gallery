@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:padding="2dp"
+            android:contentDescription="@string/photo_description"
             android:scaleType="centerCrop"
             app:imageUrl="@{hit.webFormatUrl}"
             tools:src="@tools:sample/backgrounds/scenic" />
