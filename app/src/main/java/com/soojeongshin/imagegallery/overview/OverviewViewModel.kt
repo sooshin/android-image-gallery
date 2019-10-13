@@ -16,11 +16,6 @@ import com.soojeongshin.imagegallery.network.Hit
  */
 class OverviewViewModel : ViewModel() {
 
-    private val _status = MutableLiveData<String>()
-
-    val status: LiveData<String>
-        get() = _status
-
     // Internally, we use a MutableLiveData to handle navigation to the selected hit
     private val _navigateToSelectedHit = MutableLiveData<Hit>()
 
