@@ -29,9 +29,13 @@ class PhotoStaggeredGridAdapter(private val onClickListener: OnClickListener)
     override fun onBindViewHolder(holder: HitViewHolder, position: Int) {
         val hit = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(hit!!)
+            hit?.let {
+                    hit -> onClickListener.onClick(hit)
+            }
         }
-        holder.bind(hit!!)
+        hit?.let {
+            holder.bind(it)
+        }
     }
 
     /**

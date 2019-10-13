@@ -38,7 +38,9 @@ class DetailFragment : Fragment() {
         binding = FragmentDetailBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-        hit = DetailFragmentArgs.fromBundle(arguments!!).selectedHit
+        hit = DetailFragmentArgs.fromBundle(
+            requireNotNull(arguments, {"argument 'selectedHit' is missing"}))
+            .selectedHit
 
         val viewModelFactory = DetailViewModelFactory(hit, application)
 
@@ -54,11 +56,11 @@ class DetailFragment : Fragment() {
                     requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
                 } else {
                     // Permission already granted, download images
-                    startDownloading(context!!)
+                    startDownloading(requireContext())
                 }
             } else {
                 // System OS is less than marshmallow, runtime permission is not required, perform download
-                startDownloading(context!!)
+                startDownloading(requireContext())
             }
         }
 
@@ -76,7 +78,7 @@ class DetailFragment : Fragment() {
             STORAGE_PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted, download images
-                    startDownloading(context!!)
+                    startDownloading(requireContext())
                 } else {
                     // Permission denied, show error message
                     Toast.makeText(context, "Permission denied!", Toast.LENGTH_LONG).show()
