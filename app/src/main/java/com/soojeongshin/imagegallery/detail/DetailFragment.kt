@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.soojeongshin.imagegallery.R
@@ -44,7 +45,7 @@ class DetailFragment : Fragment() {
 
         val viewModelFactory = DetailViewModelFactory(hit, application)
 
-        binding.viewModel = ViewModelProviders.of(
+        binding.viewModel = ViewModelProvider(
             this, viewModelFactory).get(DetailViewModel::class.java)
 
         binding.downloadButton.setOnClickListener {
