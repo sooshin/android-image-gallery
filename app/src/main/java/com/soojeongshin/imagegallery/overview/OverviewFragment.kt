@@ -43,7 +43,7 @@ class OverviewFragment : Fragment() {
         // Observe the navigateToSelectedHit LiveData and Navigate when it isn't null.
         // After navigation, call displayHitDetailsComplete() so that the ViewModel is ready
         // for another navigation event.
-        viewModel.navigateToSelectedHit.observe(this, Observer {
+        viewModel.navigateToSelectedHit.observe(viewLifecycleOwner, Observer {
             if (null != it) {
                 // Must find the NavController from the Fragment
                 this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
