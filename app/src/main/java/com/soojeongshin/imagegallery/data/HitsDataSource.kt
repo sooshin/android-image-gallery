@@ -29,7 +29,8 @@ class HitsDataSource : PageKeyedDataSource<Int, Hit>() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e("HitsDataSource", "Failed to load initial data")
+                Log.e("HitsDataSource", "Failed to load initial data e: $e")
+                e.printStackTrace()
             }
         }
     }

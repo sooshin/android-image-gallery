@@ -27,7 +27,6 @@ data class Hit(
     val tags: String,
     val downloads: Int,
     val user: String,
-    val favorites: Int,
     val imageSize: Int,
     val previewWidth: Int,
     @Json(name = "userImageURL") val userImageUrl: String,
